@@ -25,40 +25,61 @@ const teaserAudio = document.querySelector('.teaser-audio');
 if (soundButton && teaserVideo && teaserAudio) {
   let userMuted = false;
 
-  const trySound = () => {
-    if (!userMuted && !teaserAudio.ended) teaserAudio.play().catch(() => {});
+  const setSoundState = (isPlaying) => {
+    soundButton.setAttribute('aria-pressed', String(isPlaying));
   };
 
+  const trySound = ({ restart = false } = {}) => {
+    if (userMuted) return Promise.resolve(false);
+    if (teaserAudio.ended && !restart) return Promise.resolve(false);
+    if (restart) teaserAudio.currentTime = 0;
+
+    return teaserAudio.play()
+      .then(() => {
+        setSoundState(true);
+        return true;
+      })
+      .catch(() => {
+        setSoundState(false);
+        return false;
+      });
+  };
+
+  setSoundState(false);
   trySound();
 
-  const unlock = () => {
-    trySound();
-    document.removeEventListener('pointerdown', unlock);
-    document.removeEventListener('keydown', unlock);
+  const unlock = (event) => {
+    if (event.target.closest?.('.teaser-sound')) return;
+
+    trySound().then((started) => {
+      if (!started) return;
+      document.removeEventListener('pointerdown', unlock);
+      document.removeEventListener('keydown', unlock);
+    });
   };
   document.addEventListener('pointerdown', unlock);
   document.addEventListener('keydown', unlock);
 
   teaserAudio.addEventListener('ended', () => {
-    soundButton.setAttribute('aria-pressed', 'false');
+    setSoundState(false);
   });
 
   soundButton.addEventListener('click', () => {
-    const isOn = soundButton.getAttribute('aria-pressed') === 'true';
-    if (isOn) {
+    if (!teaserAudio.paused) {
       teaserAudio.pause();
       userMuted = true;
-      soundButton.setAttribute('aria-pressed', 'false');
+      setSoundState(false);
     } else {
       userMuted = false;
-      teaserAudio.currentTime = 0;
-      teaserAudio.play().catch(() => {});
-      soundButton.setAttribute('aria-pressed', 'true');
+      trySound({ restart: true });
     }
   });
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) teaserAudio.pause();
+    if (document.hidden) {
+      teaserAudio.pause();
+      setSoundState(false);
+    }
     else trySound();
   });
 }
