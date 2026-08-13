@@ -1,52 +1,27 @@
 # Haus des Kiosks
 
-Static website for Haus des Kiosks at Ungsteiner Str. 3 in Munich. The site is intentionally plain HTML, CSS and JavaScript so it stays fast, inexpensive and easy to maintain.
+Statische Website für den Kiosk in der Ungsteiner Str. 3, München (Giesing/Ramersdorf). Bewusst nur HTML, CSS und ein kleines JavaScript für die mobile Navigation – schnell, günstig und leicht zu pflegen.
 
-## Site character
+## Veröffentlichung
 
-The design presents the shop as what it is: a tiny, busy neighbourhood kiosk whose social space is the pavement outside. Opening hours, address, directions and the core offer (DHL, drinks, snacks, tobacco and vapes) appear immediately on mobile.
+Ein Push auf `main` startet `.github/workflows/pages.yml` und veröffentlicht die Website über GitHub Pages.
 
-The hero uses real shop footage from `teaser.mp4`. `kiez-vor-der-tuer.webp` is a deliberately illustrative editorial scene, not a photograph of the actual storefront.
+## Vor dem öffentlichen Start
 
-## Localisation
+- [x] Impressum mit echten Angaben (Zekeriya Karatas, Ungsteiner Str. 3, 81539 München, Telefon, E-Mail) ausgefüllt.
+- [ ] Umsatzsteuer-ID / Gewerbeanmeldung im Impressum ergänzen, falls vorhanden bzw. erforderlich.
+- [ ] DNS für `haus-des-kiosks.de` (und optional `www`) auf GitHub Pages umstellen – bisher zeigt die Domain auf Google Sites. Solange die DNS-Umstellung nicht erfolgt ist, bleibt die alte Seite live und diese hier ist nur über die `github.io`-URL erreichbar.
+- [ ] In den Repo-Einstellungen unter **Settings → Pages** die Custom Domain `haus-des-kiosks.de` eintragen und "Enforce HTTPS" aktivieren, sobald das DNS-Zertifikat ausgestellt ist.
 
-German, Turkish and English are defined in `script.js`. On first visit the site checks `navigator.languages` and `navigator.language`, then falls back to German. A manual choice is stored under `haus-des-kiosks-language` in `localStorage` and takes precedence on future visits.
+## Instagram
 
-The language button cycles in this fixed order without reloading the page:
+Der Instagram-Follow-Button und die Verlinkungen sind live und zeigen auf [@haus_des_kiosks](https://www.instagram.com/haus_des_kiosks/). Der "Instagram"-Abschnitt auf der Startseite (`#instagram`) enthält aktuell eine gestaltete Platzhalter-Kachel-Grafik statt echter Postings, da ein Live-Feed ohne Instagram-Login/API-Zugang (Meta Graph API) technisch nicht direkt in eine statische Seite eingebettet werden kann.
 
-`DE → TR → EN → DE`
+Um echte, sich automatisch aktualisierende Posts einzubinden, gibt es zwei Optionen:
 
-To add a language, append its code to `SUPPORTED_LANGUAGES`, add a complete translation map and keep every `data-i18n*` key covered.
+1. **Kostenloser Embed-Dienst** (empfohlen, kein Programmieraufwand): z. B. [SnapWidget](https://snapwidget.com/) oder [Behold](https://behold.so/) – dort mit dem Instagram-Konto verbinden, Widget gestalten und den bereitgestellten `<iframe>`- bzw. `<script>`-Code in `index.html` an Stelle des `.insta-tiles`-Blocks einfügen.
+2. **Manuell**: Screenshots der Lieblingsposts als Bilder in den `.insta-tiles`-Block einfügen und von Zeit zu Zeit aktualisieren.
 
-Shared language and opening-hours rules live in `site-config.js`. Opening status is
-always calculated in `Europe/Berlin`; a static contract check keeps the published
-JSON-LD hours aligned with that configuration.
+## Karte
 
-## Quality checks
-
-Node.js 22 or newer is sufficient; the first test tier has no package dependencies:
-
-```bash
-npm test
-```
-
-This checks JavaScript syntax, basic HTML structure, local links and assets,
-duplicate IDs, canonical/OpenGraph/favicon metadata, DE/TR/EN key and placeholder
-parity, approved external subresources, sitemap/robots, language selection and
-opening-hours boundaries. `.github/workflows/quality.yml` runs the same suite for
-pushes and pull requests.
-
-## Publishing
-
-A push to `main` runs `.github/workflows/pages.yml` and deploys the site to GitHub Pages.
-The deployment workflow is not yet gated on the separate quality workflow.
-
-Current launch and maintenance tasks are tracked only in [`.agent/TODO.md`](.agent/TODO.md).
-The custom domain and enforced HTTPS were verified during the 2026-08-13 agent-state
-handoff; legal and physical-device review remain separate tasks.
-
-## External services
-
-- Instagram: [@haus_des_kiosks](https://www.instagram.com/haus_des_kiosks/)
-- TikTok: [@haus.des.kiosks](https://www.tiktok.com/@haus.des.kiosks)
-- Map: embedded OpenStreetMap view with a Google Maps directions link; no API key is required.
+Die Kontaktkarte nutzt einen einbettbaren OpenStreetMap-Ausschnitt (kein API-Key nötig). Der "Route planen"-Button verlinkt auf Google Maps.
