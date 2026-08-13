@@ -25,6 +25,7 @@ No additional feature work is currently recorded.
 
 ## Recently completed
 
+- [x] Add the linked `website made by itmitalles.de` footer credit.
 - [x] Complete the mobile-first DE/TR/EN redesign.
 - [x] Correct canonical URLs to `https://hausdeskiosks.de/`.
 - [x] Point the custom domain to GitHub Pages and enable enforced HTTPS.

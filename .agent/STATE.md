@@ -29,6 +29,7 @@ and confirmation of owner-controlled legal/contact details.
 
 ## Recently completed
 
+- Added the linked footer credit `website made by itmitalles.de`.
 - Reworked the site around the real neighborhood-kiosk character and mobile use.
 - Corrected canonical website URLs to `https://hausdeskiosks.de/`.
 - Verified the custom domain and HTTPS after the redesign merge.
@@ -63,6 +64,5 @@ and confirmation of owner-controlled legal/contact details.
 
 ## Last handoff
 
-2026-08-13: migrated the detailed generic root handoff into `.agent/`, retained all
-remaining launch tasks, and verified that the formerly pending domain migration is
-now complete.
+2026-08-13: added the linked `itmitalles.de` footer credit, validated the static
+page, and integrated the persistent `.agent/` context workflow from the remote.
