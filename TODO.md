@@ -1,16 +1,46 @@
 # Next Agent Handoff
 
-## Prompt
+## Goal
 
-Continue work in `hausdeskiosks-de/haus-des-kiosks.de` from its latest committed state. First read this file from the latest commit, inspect the latest commit and working tree, and review the repository's issue tracker or other task source. No repository-specific in-progress task was recorded when this handoff file was created. If the user says "mach weiter" or "weida", identify the highest-priority unfinished task from that evidence and continue it without asking the user to repeat prior context. Do not invent scope; ask only when a material decision cannot be resolved safely from the repository.
+Maintain the completed Haus des Kiosks redesign as a mobile-first, trilingual neighbourhood-kiosk site built around the line “Hallo. Servus. Merhaba. Klein der Laden. Draußen groß.”
 
-Before every commit, replace this generic prompt with a concrete handoff for the next agent and update all sections below. The `TODO.md` update must be part of the same commit.
+## Completed
 
-## Current state
+- Rebuilt the home page around the actual shop character: tiny interior, fast practical purchases and spontaneous pavement conversations rather than café or lounge language.
+- Put opening hours, address, directions, telephone and the core offer (DHL, cold drinks, snacks, tobacco and vapes) in the first mobile viewport.
+- Replaced the former polished/red-black layout with a rough urban kiosk system using poster typography, price-card colours, thick rules, stickers and compact mobile layouts.
+- Kept the real shop video as the hero proof point and added `kiez-vor-der-tuer.webp` as an explicitly illustrative street-scene asset.
+- Added automatic DE/TR/EN selection from browser preferences, German fallback, the exact `DE → TR → EN → DE` click cycle, no-reload translation and persistent manual selection in `localStorage`.
+- Localised the home page, legal pages and 404 page, including relevant metadata and accessibility labels.
+- Updated `README.md` with the design, localisation architecture, asset disclosure and publishing notes.
 
-- Active goal: No active repository-specific goal recorded yet.
-- Completed: Added the canonical next-agent handoff file.
-- Remaining: Identify and execute the next unfinished repository task.
-- Blockers or decisions: None recorded.
-- Relevant files: `TODO.md`
-- Verification: Documentation-only change; no tests required.
+## Remaining
+
+- No implementation work remains for the requested redesign.
+- Next useful action: review the deployed GitHub Pages build on physical iOS and Android devices, then confirm the existing pre-launch legal and DNS checklist in `README.md`.
+
+## Blockers or pending decisions
+
+- The legal notice still contains the pre-existing reminder to confirm whether a VAT ID, business registration or supervisory authority must be added.
+- DNS still needs to be switched from Google Sites to GitHub Pages before the new site becomes public at the custom domain.
+
+## Relevant files
+
+- `index.html`
+- `styles.css`
+- `script.js`
+- `kiez-vor-der-tuer.webp`
+- `impressum.html`
+- `datenschutz.html`
+- `404.html`
+- `README.md`
+
+## Verification performed
+
+- `node --check script.js` — passed.
+- `git diff --check` — passed.
+- Translation-key coverage check — every HTML `data-i18n*` key exists in DE, TR and EN.
+- Headless Google Chrome screenshots at 320×800, 390×844, 390×7200 and 1440×1000 — visually checked; responsive layout and key first-viewport content render correctly.
+- Browser-language test with `--lang=tr-TR --accept-lang=tr-TR,tr` — selected Turkish automatically.
+- Chrome DevTools Protocol click-cycle test — observed `EN → DE → TR → EN` with matching button labels and stored values.
+- Reload persistence test — stored `TR` returned as `lang="tr"`, button `TR`, storage value `tr` after reload.

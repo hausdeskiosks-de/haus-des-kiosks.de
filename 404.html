@@ -1,1 +1,31 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nicht gefunden – Haus des Kiosks</title><link rel="stylesheet" href="styles.css"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon.ico" sizes="any"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body><main class="legal-page"><div class="container legal-card"><p class="eyebrow eyebrow-dark">404</p><h1>Hier gibt's nichts zu kaufen.</h1><p>Die gesuchte Seite existiert nicht. Aber der Kiosk ist täglich von 8 bis 22 Uhr geöffnet.</p><p><a class="button button-primary" href="/">Zur Startseite <span aria-hidden="true">↗</span></a></p></div></main></body></html>
+<!doctype html>
+<html lang="de" class="i18n-pending">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#171717">
+    <title>Nicht gefunden – Haus des Kiosks</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <script src="script.js" defer></script>
+    <noscript><style>.i18n-pending [data-i18n] { visibility: visible !important; }</style></noscript>
+  </head>
+  <body data-page="notFound">
+    <header class="site-header">
+      <div class="shell nav-wrap">
+        <a class="brand" href="/" aria-label="Haus des Kiosks Startseite" data-i18n-aria="brand.home"><span>HAUS</span><span class="brand-des">DES</span><span>KIOSKS</span></a>
+        <div class="nav-actions"><button class="language-toggle" type="button" aria-label="Sprache wechseln" data-i18n-aria="language.switch">DE</button></div>
+      </div>
+    </header>
+    <main class="not-found">
+      <div class="shell">
+        <p class="section-number">404 / ERROR</p>
+        <h1 data-i18n="notFound.title">Hier gibt’s nichts zu kaufen.</h1>
+        <p data-i18n="notFound.text">Die gesuchte Seite existiert nicht. Aber der Kiosk ist täglich von 8 bis 22 Uhr geöffnet.</p>
+        <a class="button button-ink" href="/"><span data-i18n="notFound.back">Zur Startseite</span><span aria-hidden="true">↗</span></a>
+      </div>
+    </main>
+  </body>
+</html>
