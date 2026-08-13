@@ -51,8 +51,6 @@ than maintaining a competing checklist.
   headers. Mark network/authentication failures separately from site failures.
 - [ ] Create `docs/VERIFICATION_MATRIX.md`, `docs/RELEASE_CHECKLIST.md` and
   `docs/NICE_TO_HAVE.md` from verified results.
-- [ ] Push `agent/kiosk-quality-and-regression` and open a draft pull request after
-  the remaining implementation has been validated. Do not merge automatically.
 
 ## Later — document only, do not implement
 
@@ -71,6 +69,8 @@ than maintaining a competing checklist.
 
 ## Recently completed
 
+- [x] Push and fast-forward the first quality baseline into `main` by explicit user
+  request; no pull request was opened for this direct integration.
 - [x] Create `agent/kiosk-quality-and-regression` from current `main`.
 - [x] Add dependency-free JS syntax, HTML/link/asset/ID, metadata, i18n,
   placeholder, external-resource, sitemap/robots and JSON-LD schedule checks.

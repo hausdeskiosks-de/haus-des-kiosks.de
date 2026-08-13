@@ -7,17 +7,17 @@ surfaces hours, location, contact details, and the core offer immediately.
 
 ## Current status
 
-- Default branch: `main`; quality branch: `agent/kiosk-quality-and-regression`;
-  inspected base commit: `5b41e6e`.
+- Default branch: `main`; the quality baseline from commit `f522d22` was integrated
+  by fast-forward from `agent/kiosk-quality-and-regression`.
 - The neighborhood-kiosk redesign is implemented in DE/TR/EN.
 - A dependency-free static/unit regression tier now covers the existing published
   facts, translations and opening-hours behavior.
 - The Pages workflow for `5b41e6e` completed successfully on 2026-08-13.
 - `https://hausdeskiosks.de/` returned HTTP 200 on 2026-08-13; DNS resolved to
   GitHub Pages and GitHub reported an approved certificate with enforced HTTPS.
-- No open GitHub issues or pull requests were found during this handoff.
-- The quality branch is intentionally local and unpushed at this handoff; the user
-  requested a commit followed by a pause.
+- No open GitHub issues or pull requests were found before integration.
+- The user explicitly requested direct merge/push/sync after the initial pause, so
+  this milestone was integrated without opening the previously planned draft PR.
 
 ## Working
 
@@ -35,9 +35,9 @@ surfaces hours, location, contact details, and the core offer immediately.
 
 ## Active work
 
-The first quality milestone is committed locally. Browser automation, accessibility
-remediation, privacy/media work, production diagnostics and release documentation
-remain explicitly open in `.agent/TODO.md`.
+The first quality milestone is integrated into `main`. Browser automation,
+accessibility remediation, privacy/media work, production diagnostics and release
+documentation remain explicitly open in `.agent/TODO.md`.
 
 ## Recently completed
 
@@ -70,7 +70,7 @@ remain explicitly open in `.agent/TODO.md`.
    privacy description.
 3. Add media/performance budgets and production deployment diagnostics.
 4. Create the verification/release/nice-to-have documents.
-5. Push this branch and open a draft pull request after the next implementation pass.
+5. Continue the next coherent milestone on a fresh `agent/*` branch.
 
 ## Relevant files
 
@@ -92,6 +92,7 @@ remain explicitly open in `.agent/TODO.md`.
 
 ## Last handoff
 
-2026-08-13: created the first dependency-free quality baseline and paused after a
-local commit as requested. No push or pull request was created; all unimplemented
-parts of the broader quality brief are itemized in `.agent/TODO.md`.
+2026-08-13: integrated and synchronized the first dependency-free quality baseline
+after the user explicitly requested a direct fast-forward merge. No pull request was
+opened. All unimplemented parts of the broader quality brief remain itemized in
+`.agent/TODO.md`.
