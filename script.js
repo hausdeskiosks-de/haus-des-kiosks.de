@@ -1,7 +1,13 @@
-const SUPPORTED_LANGUAGES = ['de', 'tr', 'en'];
-const LANGUAGE_STORAGE_KEY = 'haus-des-kiosks-language';
+import {
+  SUPPORTED_LANGUAGES,
+  getStoredLanguage,
+  isOpenAt,
+  nextLanguage,
+  normalizeLanguage,
+  selectLanguage
+} from './site-config.js';
 
-const translations = {
+export const translations = {
   de: {
     'home.meta.title': 'Haus des Kiosks – Hallo. Servus. Merhaba.',
     'home.meta.description': 'Haus des Kiosks in München: DHL Paketshop, kalte Getränke, Snacks, Tabak und Vapes. Täglich 8–22 Uhr in der Ungsteiner Str. 3.',
@@ -265,44 +271,22 @@ const translations = {
 let activeLanguage = 'de';
 
 function storedLanguage() {
-  try {
-    const language = localStorage.getItem(LANGUAGE_STORAGE_KEY)?.toLowerCase().split('-')[0];
-    return SUPPORTED_LANGUAGES.includes(language) ? language : null;
-  } catch {
-    return null;
-  }
+  return getStoredLanguage(localStorage);
 }
 
 function browserLanguage() {
   const requested = [...(navigator.languages || []), navigator.language].filter(Boolean);
-  for (const locale of requested) {
-    const language = locale.toLowerCase().split('-')[0];
-    if (SUPPORTED_LANGUAGES.includes(language)) return language;
-  }
-  return 'de';
+  return selectLanguage(null, requested);
 }
 
 function translate(key, language = activeLanguage) {
   return translations[language]?.[key] ?? translations.de[key] ?? key;
 }
 
-function berlinHour() {
-  const parts = new Intl.DateTimeFormat('en-GB', {
-    timeZone: 'Europe/Berlin',
-    hour: '2-digit',
-    minute: '2-digit',
-    hourCycle: 'h23'
-  }).formatToParts(new Date());
-  const hour = Number(parts.find((part) => part.type === 'hour')?.value ?? 0);
-  const minute = Number(parts.find((part) => part.type === 'minute')?.value ?? 0);
-  return hour + minute / 60;
-}
-
 function renderOpenStatus() {
   const status = document.querySelector('#open-status');
   if (!status) return;
-  const currentHour = berlinHour();
-  const isOpen = currentHour >= 8 && currentHour < 22;
+  const isOpen = isOpenAt();
   status.textContent = translate(isOpen ? 'status.open' : 'status.closed');
   document.querySelector('.status-dot')?.classList.toggle('is-open', isOpen);
 }
@@ -322,7 +306,7 @@ function renderSoundLabel() {
 }
 
 function applyLanguage(language, { persist = false } = {}) {
-  activeLanguage = SUPPORTED_LANGUAGES.includes(language) ? language : 'de';
+  activeLanguage = normalizeLanguage(language) ?? 'de';
   document.documentElement.lang = activeLanguage;
 
   document.querySelectorAll('[data-i18n]').forEach((element) => {
@@ -366,67 +350,70 @@ function applyLanguage(language, { persist = false } = {}) {
   }
 }
 
-const menuButton = document.querySelector('.menu-toggle');
-const navigation = document.querySelector('#main-nav');
+function initializeSite() {
+  const menuButton = document.querySelector('.menu-toggle');
+  const navigation = document.querySelector('#main-nav');
 
-function closeMenu() {
-  if (!menuButton || !navigation) return;
-  navigation.classList.remove('is-open');
-  menuButton.setAttribute('aria-expanded', 'false');
-  renderMenuLabel();
-}
-
-if (menuButton && navigation) {
-  menuButton.addEventListener('click', () => {
-    const isOpen = navigation.classList.toggle('is-open');
-    menuButton.setAttribute('aria-expanded', String(isOpen));
+  function closeMenu() {
+    if (!menuButton || !navigation) return;
+    navigation.classList.remove('is-open');
+    menuButton.setAttribute('aria-expanded', 'false');
     renderMenuLabel();
+  }
+
+  if (menuButton && navigation) {
+    menuButton.addEventListener('click', () => {
+      const isOpen = navigation.classList.toggle('is-open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+      renderMenuLabel();
+    });
+    navigation.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMenu();
+    });
+  }
+
+  document.querySelector('.language-toggle')?.addEventListener('click', () => {
+    applyLanguage(nextLanguage(activeLanguage), { persist: true });
+    closeMenu();
   });
-  navigation.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeMenu();
-  });
-}
 
-document.querySelector('.language-toggle')?.addEventListener('click', () => {
-  const nextIndex = (SUPPORTED_LANGUAGES.indexOf(activeLanguage) + 1) % SUPPORTED_LANGUAGES.length;
-  applyLanguage(SUPPORTED_LANGUAGES[nextIndex], { persist: true });
-  closeMenu();
-});
+  const soundButton = document.querySelector('.teaser-sound');
+  const teaserAudio = document.querySelector('.teaser-audio');
 
-const soundButton = document.querySelector('.teaser-sound');
-const teaserAudio = document.querySelector('.teaser-audio');
+  if (soundButton && teaserAudio) {
+    soundButton.addEventListener('click', async () => {
+      if (!teaserAudio.paused) {
+        teaserAudio.pause();
+        teaserAudio.currentTime = 0;
+        soundButton.setAttribute('aria-pressed', 'false');
+        soundButton.setAttribute('aria-label', translate('sound.on'));
+        return;
+      }
 
-if (soundButton && teaserAudio) {
-  soundButton.addEventListener('click', async () => {
-    if (!teaserAudio.paused) {
-      teaserAudio.pause();
-      teaserAudio.currentTime = 0;
+      try {
+        await teaserAudio.play();
+        soundButton.setAttribute('aria-pressed', 'true');
+        soundButton.setAttribute('aria-label', translate('sound.off'));
+      } catch {
+        soundButton.setAttribute('aria-pressed', 'false');
+      }
+    });
+    teaserAudio.addEventListener('ended', () => {
       soundButton.setAttribute('aria-pressed', 'false');
       soundButton.setAttribute('aria-label', translate('sound.on'));
-      return;
-    }
+    });
+  }
 
-    try {
-      await teaserAudio.play();
-      soundButton.setAttribute('aria-pressed', 'true');
-      soundButton.setAttribute('aria-label', translate('sound.off'));
-    } catch {
-      soundButton.setAttribute('aria-pressed', 'false');
-    }
-  });
-  teaserAudio.addEventListener('ended', () => {
-    soundButton.setAttribute('aria-pressed', 'false');
-    soundButton.setAttribute('aria-label', translate('sound.on'));
+  const year = document.querySelector('#year');
+  if (year) year.textContent = new Date().getFullYear();
+
+  applyLanguage(storedLanguage() || browserLanguage());
+
+  window.HausDesKiosksI18n = Object.freeze({
+    languages: [...SUPPORTED_LANGUAGES],
+    setLanguage: (language) => applyLanguage(language, { persist: true })
   });
 }
 
-const year = document.querySelector('#year');
-if (year) year.textContent = new Date().getFullYear();
-
-applyLanguage(storedLanguage() || browserLanguage());
-
-window.HausDesKiosksI18n = Object.freeze({
-  languages: [...SUPPORTED_LANGUAGES],
-  setLanguage: (language) => applyLanguage(language, { persist: true })
-});
+if (typeof document !== 'undefined') initializeSite();

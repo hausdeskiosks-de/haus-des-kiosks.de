@@ -18,9 +18,28 @@ The language button cycles in this fixed order without reloading the page:
 
 To add a language, append its code to `SUPPORTED_LANGUAGES`, add a complete translation map and keep every `data-i18n*` key covered.
 
+Shared language and opening-hours rules live in `site-config.js`. Opening status is
+always calculated in `Europe/Berlin`; a static contract check keeps the published
+JSON-LD hours aligned with that configuration.
+
+## Quality checks
+
+Node.js 22 or newer is sufficient; the first test tier has no package dependencies:
+
+```bash
+npm test
+```
+
+This checks JavaScript syntax, basic HTML structure, local links and assets,
+duplicate IDs, canonical/OpenGraph/favicon metadata, DE/TR/EN key and placeholder
+parity, approved external subresources, sitemap/robots, language selection and
+opening-hours boundaries. `.github/workflows/quality.yml` runs the same suite for
+pushes and pull requests.
+
 ## Publishing
 
 A push to `main` runs `.github/workflows/pages.yml` and deploys the site to GitHub Pages.
+The deployment workflow is not yet gated on the separate quality workflow.
 
 Current launch and maintenance tasks are tracked only in [`.agent/TODO.md`](.agent/TODO.md).
 The custom domain and enforced HTTPS were verified during the 2026-08-13 agent-state

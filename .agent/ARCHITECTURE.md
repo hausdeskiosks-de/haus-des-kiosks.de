@@ -12,6 +12,8 @@ application backend, build process, or server-side persistence.
 - `styles.css`: shared responsive layout and visual system.
 - `script.js`: translation dictionaries, language state, navigation, opening-hours
   display, and media behavior.
+- `site-config.js`: DOM-free canonical language/storage rules and opening-hours
+  configuration/calculation shared by the browser and Node tests.
 - Root media assets: real shop video/audio/logo assets plus a disclosed editorial
   illustration.
 
@@ -32,7 +34,11 @@ No business or customer data is submitted to this repository.
 `.github/workflows/pages.yml` uploads the repository root on pushes to `main`.
 `CNAME` declares the custom domain.
 
+`.github/workflows/quality.yml` independently runs `npm test` for pushes and pull
+requests. It does not gate the Pages workflow yet.
+
 ## Testing
 
-Use JavaScript syntax checks, translation-key coverage, link/asset checks, and
-browser review at representative mobile and desktop sizes.
+`npm test` runs dependency-free JavaScript syntax, static site-contract and Node
+unit checks. Browser, accessibility, visual and performance automation remains a
+separate unfinished test tier tracked in `.agent/TODO.md`.
