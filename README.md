@@ -22,11 +22,9 @@ To add a language, append its code to `SUPPORTED_LANGUAGES`, add a complete tran
 
 A push to `main` runs `.github/workflows/pages.yml` and deploys the site to GitHub Pages.
 
-Before the public launch:
-
-- Confirm whether a VAT ID, business registration or supervisory authority must be added to the legal notice.
-- Point DNS for `hausdeskiosks.de` (and optionally `www`) to GitHub Pages. The domain currently still points to Google Sites.
-- Set `hausdeskiosks.de` as the custom domain under **Settings → Pages** and enable **Enforce HTTPS** once the certificate is available.
+Current launch and maintenance tasks are tracked only in [`.agent/TODO.md`](.agent/TODO.md).
+The custom domain and enforced HTTPS were verified during the 2026-08-13 agent-state
+handoff; legal and physical-device review remain separate tasks.
 
 ## External services
 
