@@ -13,6 +13,7 @@ Maintain the completed Haus des Kiosks redesign as a mobile-first, trilingual ne
 - Added automatic DE/TR/EN selection from browser preferences, German fallback, the exact `DE → TR → EN → DE` click cycle, no-reload translation and persistent manual selection in `localStorage`.
 - Localised the home page, legal pages and 404 page, including relevant metadata and accessibility labels.
 - Updated `README.md` with the design, localisation architecture, asset disclosure and publishing notes.
+- Corrected all public website URLs and canonical metadata to the actual domain `https://hausdeskiosks.de/`; `CNAME` already contained the correct domain.
 
 ## Remaining
 
@@ -22,7 +23,8 @@ Maintain the completed Haus des Kiosks redesign as a mobile-first, trilingual ne
 ## Blockers or pending decisions
 
 - The legal notice still contains the pre-existing reminder to confirm whether a VAT ID, business registration or supervisory authority must be added.
-- DNS still needs to be switched from Google Sites to GitHub Pages before the new site becomes public at the custom domain.
+- DNS for `hausdeskiosks.de` still needs to be switched from Google Sites to GitHub Pages before the new site becomes public at the custom domain.
+- The existing contact address remains `info@haus-des-kiosks.de`; it was not changed because an email domain can legitimately differ from the website domain. Confirm separately if the mailbox should also move.
 
 ## Relevant files
 

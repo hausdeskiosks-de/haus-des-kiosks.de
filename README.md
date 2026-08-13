@@ -25,8 +25,8 @@ A push to `main` runs `.github/workflows/pages.yml` and deploys the site to GitH
 Before the public launch:
 
 - Confirm whether a VAT ID, business registration or supervisory authority must be added to the legal notice.
-- Point DNS for `haus-des-kiosks.de` (and optionally `www`) to GitHub Pages. The domain currently still points to Google Sites.
-- Set `haus-des-kiosks.de` as the custom domain under **Settings → Pages** and enable **Enforce HTTPS** once the certificate is available.
+- Point DNS for `hausdeskiosks.de` (and optionally `www`) to GitHub Pages. The domain currently still points to Google Sites.
+- Set `hausdeskiosks.de` as the custom domain under **Settings → Pages** and enable **Enforce HTTPS** once the certificate is available.
 
 ## External services
 
