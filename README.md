@@ -1,27 +1,35 @@
 # Haus des Kiosks
 
-Statische Website für den Kiosk in der Ungsteiner Str. 3, München (Giesing/Ramersdorf). Bewusst nur HTML, CSS und ein kleines JavaScript für die mobile Navigation – schnell, günstig und leicht zu pflegen.
+Static website for Haus des Kiosks at Ungsteiner Str. 3 in Munich. The site is intentionally plain HTML, CSS and JavaScript so it stays fast, inexpensive and easy to maintain.
 
-## Veröffentlichung
+## Site character
 
-Ein Push auf `main` startet `.github/workflows/pages.yml` und veröffentlicht die Website über GitHub Pages.
+The design presents the shop as what it is: a tiny, busy neighbourhood kiosk whose social space is the pavement outside. Opening hours, address, directions and the core offer (DHL, drinks, snacks, tobacco and vapes) appear immediately on mobile.
 
-## Vor dem öffentlichen Start
+The hero uses real shop footage from `teaser.mp4`. `kiez-vor-der-tuer.webp` is a deliberately illustrative editorial scene, not a photograph of the actual storefront.
 
-- [x] Impressum mit echten Angaben (Zekeriya Karatas, Ungsteiner Str. 3, 81539 München, Telefon, E-Mail) ausgefüllt.
-- [ ] Umsatzsteuer-ID / Gewerbeanmeldung im Impressum ergänzen, falls vorhanden bzw. erforderlich.
-- [ ] DNS für `haus-des-kiosks.de` (und optional `www`) auf GitHub Pages umstellen – bisher zeigt die Domain auf Google Sites. Solange die DNS-Umstellung nicht erfolgt ist, bleibt die alte Seite live und diese hier ist nur über die `github.io`-URL erreichbar.
-- [ ] In den Repo-Einstellungen unter **Settings → Pages** die Custom Domain `haus-des-kiosks.de` eintragen und "Enforce HTTPS" aktivieren, sobald das DNS-Zertifikat ausgestellt ist.
+## Localisation
 
-## Instagram
+German, Turkish and English are defined in `script.js`. On first visit the site checks `navigator.languages` and `navigator.language`, then falls back to German. A manual choice is stored under `haus-des-kiosks-language` in `localStorage` and takes precedence on future visits.
 
-Der Instagram-Follow-Button und die Verlinkungen sind live und zeigen auf [@haus_des_kiosks](https://www.instagram.com/haus_des_kiosks/). Der "Instagram"-Abschnitt auf der Startseite (`#instagram`) enthält aktuell eine gestaltete Platzhalter-Kachel-Grafik statt echter Postings, da ein Live-Feed ohne Instagram-Login/API-Zugang (Meta Graph API) technisch nicht direkt in eine statische Seite eingebettet werden kann.
+The language button cycles in this fixed order without reloading the page:
 
-Um echte, sich automatisch aktualisierende Posts einzubinden, gibt es zwei Optionen:
+`DE → TR → EN → DE`
 
-1. **Kostenloser Embed-Dienst** (empfohlen, kein Programmieraufwand): z. B. [SnapWidget](https://snapwidget.com/) oder [Behold](https://behold.so/) – dort mit dem Instagram-Konto verbinden, Widget gestalten und den bereitgestellten `<iframe>`- bzw. `<script>`-Code in `index.html` an Stelle des `.insta-tiles`-Blocks einfügen.
-2. **Manuell**: Screenshots der Lieblingsposts als Bilder in den `.insta-tiles`-Block einfügen und von Zeit zu Zeit aktualisieren.
+To add a language, append its code to `SUPPORTED_LANGUAGES`, add a complete translation map and keep every `data-i18n*` key covered.
 
-## Karte
+## Publishing
 
-Die Kontaktkarte nutzt einen einbettbaren OpenStreetMap-Ausschnitt (kein API-Key nötig). Der "Route planen"-Button verlinkt auf Google Maps.
+A push to `main` runs `.github/workflows/pages.yml` and deploys the site to GitHub Pages.
+
+Before the public launch:
+
+- Confirm whether a VAT ID, business registration or supervisory authority must be added to the legal notice.
+- Point DNS for `hausdeskiosks.de` (and optionally `www`) to GitHub Pages. The domain currently still points to Google Sites.
+- Set `hausdeskiosks.de` as the custom domain under **Settings → Pages** and enable **Enforce HTTPS** once the certificate is available.
+
+## External services
+
+- Instagram: [@haus_des_kiosks](https://www.instagram.com/haus_des_kiosks/)
+- TikTok: [@haus.des.kiosks](https://www.tiktok.com/@haus.des.kiosks)
+- Map: embedded OpenStreetMap view with a Google Maps directions link; no API key is required.
